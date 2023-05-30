@@ -1,19 +1,45 @@
 <script lang="ts">
+	import { mergeClassNames } from '~/utils/mergeClassNames';
 	export let value = '';
 	export let isHidden = false;
+	export let isSelected = false;
+	export let isDisabled = false;
 	export let title = '';
+	export let onClick: (() => void) | undefined = undefined;
+	let classNames = mergeClassNames(
+		'flex items-center justify-center w-16 h-24 bg-gray-100 rounded-md overflow-hidden text-gray-900 transition-all',
+		'aria-checked:border-4 aria-checked:border-green-500 aria-checked:bg-green-500 aria-checked:shadow-base aria-checked:shadow-green-500 aria-checked:text-white aria-checked:hover:bg-green-500',
+		'aria-hidden:p-5',
+		isDisabled &&
+			'aria-disabled:bg-gray-500 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-gray-500 aria-disabled:focus:bg-gray-500',
+		!isDisabled &&
+			`${
+				!isSelected ? 'clickable:hover:bg-green-100 clickable:focus:bg-green-100 ' : ''
+			}clickable:hover:border-4 clickable:hover:border-green-500 clickable:hover:shadow-base clickable:hover:shadow-green-500 clickable:focus:border-4 clickable:focus:border-green-500 clickable:focus:shadow-base clickable:focus:shadow-green-500 clickable:outline-none`
+	);
 </script>
 
 <div class="flex flex-col items-center w-auto">
 	{#if !isHidden}
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div
-			class="flex items-center justify-center w-16 h-24 p-5 bg-gray-100 rounded-md mt-5 overflow-hidden text-gray-900"
+			class={classNames}
+			on:click={onClick}
+			role={onClick ? 'button' : undefined}
+			tabindex={onClick ? 0 : undefined}
+			aria-checked={isSelected}
+			aria-hidden={isHidden}
+			aria-disabled={isDisabled}
 		>
 			<h2 class="text-2xl font-bold">{value}</h2>
 		</div>
 	{:else}
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div
-			class="flex items-stretch justify-center w-16 h-24 p-0 bg-gray-100 rounded-md mt-5 overflow-hidden text-gray-900"
+			class="flex items-center justify-center w-16 h-24 bg-gray-100 rounded-md overflow-hidden text-gray-900"
+			on:click={onClick}
+			role={onClick ? 'button' : undefined}
+			tabindex={onClick ? 0 : undefined}
 		>
 			<div class="flex-1 h-full bg-green-300" />
 			<div class="flex-1 h-full bg-green-200" />

@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let label: string | undefined;
-	export let id = '';
 	export let name = '';
 	export let placeholder = '';
 	export let type: 'text' | 'password' | 'email' | 'number' = 'text';
