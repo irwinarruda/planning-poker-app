@@ -3,13 +3,13 @@
 	import TextField from '~/components/TextField.svelte';
 
 	let userName = '';
-	let roomName = '';
+	let roomId = '';
 
 	function onSubmit(e: Event) {
 		e.preventDefault();
 		console.log('data', {
 			userName,
-			roomName
+			roomId
 		});
 	}
 </script>
@@ -30,9 +30,9 @@
 	<TextField
 		className="mt-3"
 		label="Room Name"
-		name="roomName"
-		value={roomName}
-		onInput={(e) => (roomName = e.currentTarget.value)}
+		name="roomId"
+		value={roomId}
+		onInput={(e) => (roomId = e.currentTarget.value)}
 	/>
 	<Button type="submit" className="w-full mt-5 mx-auto">Join</Button>
 	<div class="flex justify-center">

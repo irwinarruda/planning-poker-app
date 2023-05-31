@@ -5,17 +5,22 @@
 	export let isSelected = false;
 	export let isDisabled = false;
 	export let title = '';
+	export let size: 'md' | 'sm' = 'md';
+	export let className: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
 	let classNames = mergeClassNames(
-		'flex items-center justify-center w-16 h-24 bg-gray-100 rounded-md overflow-hidden text-gray-900 transition-all',
+		'flex items-center justify-center bg-gray-100 rounded-md overflow-hidden text-gray-900 outline-none transition-all',
 		'aria-checked:border-4 aria-checked:border-green-500 aria-checked:bg-green-500 aria-checked:shadow-base aria-checked:shadow-green-500 aria-checked:text-white aria-checked:hover:bg-green-500',
 		'aria-hidden:p-5',
+		size === 'md' && 'w-16 h-24',
+		size === 'sm' && 'w-10 h-16',
 		isDisabled &&
-			'aria-disabled:bg-gray-500 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-gray-500 aria-disabled:focus:bg-gray-500',
+			'aria-disabled:text-white aria-disabled:bg-gray-400 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-gray-400 aria-disabled:focus:bg-gray-500',
 		!isDisabled &&
 			`${
 				!isSelected ? 'clickable:hover:bg-green-100 clickable:focus:bg-green-100 ' : ''
-			}clickable:hover:border-4 clickable:hover:border-green-500 clickable:hover:shadow-base clickable:hover:shadow-green-500 clickable:focus:border-4 clickable:focus:border-green-500 clickable:focus:shadow-base clickable:focus:shadow-green-500 clickable:outline-none`
+			}clickable:hover:border-4 clickable:hover:border-green-500 clickable:hover:shadow-base clickable:hover:shadow-green-500 clickable:focus:border-4 clickable:focus:border-green-500 clickable:focus:shadow-base clickable:focus:shadow-green-500`,
+		className
 	);
 </script>
 
@@ -36,7 +41,7 @@
 	{:else}
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div
-			class="flex items-center justify-center w-16 h-24 bg-gray-100 rounded-md overflow-hidden text-gray-900"
+			class={classNames}
 			on:click={onClick}
 			role={onClick ? 'button' : undefined}
 			tabindex={onClick ? 0 : undefined}
@@ -51,6 +56,6 @@
 		</div>
 	{/if}
 	{#if title}
-		<h3 class="mt-2 text-lg font-semibold">{title}</h3>
+		<h3 class={`mt-2 text-${size === 'md' ? 'lg' : 'sm'} font-semibold`}>{title}</h3>
 	{/if}
 </div>

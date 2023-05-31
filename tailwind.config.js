@@ -7,6 +7,9 @@ export default {
 		extend: {
 			boxShadow: {
 				base: '0 0 3px 0 rgba(34, 197, 94, 0.1)'
+			},
+			minWidth: {
+				'1/2': '50%'
 			}
 		}
 	},

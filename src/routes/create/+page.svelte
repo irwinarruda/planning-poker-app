@@ -1,6 +1,13 @@
 <script lang="ts">
+	import type { Socket } from 'socket.io-client';
 	import Button from '~/components/Button.svelte';
 	import TextField from '~/components/TextField.svelte';
+	import { PlanningPokerStore } from '~/providers/PlanningPokerStore';
+
+	let socket: Socket;
+	PlanningPokerStore.subscribe((state) => {
+		socket = state.socket!;
+	});
 
 	let userName = '';
 	let roomName = '';
@@ -8,7 +15,7 @@
 
 	function onSubmit(e: Event) {
 		e.preventDefault();
-		console.log('data', {
+		socket.emit('createRoom', {
 			userName,
 			roomName,
 			roomCards

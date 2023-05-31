@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 import { webSocket } from './plugins/webSocket.js';
-import { handleSocket } from './server/socket.js';
+import { SocketHandler } from './server/socket.js';
 
 export default defineConfig({
 	resolve: {
@@ -11,5 +11,5 @@ export default defineConfig({
 			'~': path.resolve('./src')
 		}
 	},
-	plugins: [sveltekit(), webSocket(handleSocket)]
+	plugins: [sveltekit(), webSocket((io) => new SocketHandler(io))]
 });
