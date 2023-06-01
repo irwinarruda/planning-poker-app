@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Socket } from 'socket.io-client';
+	import { PlanningPokerStore } from '~/providers/PlanningPokerStore';
 	import Button from '~/components/Button.svelte';
 	import TextField from '~/components/TextField.svelte';
-	import { PlanningPokerStore } from '~/providers/PlanningPokerStore';
 
 	let socket: Socket;
 	PlanningPokerStore.subscribe((state) => {

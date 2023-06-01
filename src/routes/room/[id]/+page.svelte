@@ -1,10 +1,20 @@
 <script lang="ts">
+	import type { Room } from '~/entities/Room.js';
+	import type { User } from '~/entities/User.js';
+	import { PlanningPokerStore } from '~/providers/PlanningPokerStore';
 	import Button from '~/components/Button.svelte';
 	import Card from '~/components/Card.svelte';
-	export let data;
+	// export let data;
+
+	let room: Room;
+	let user: User;
+	PlanningPokerStore.subscribe((state) => {
+		room = state.room!;
+		user = state.user!;
+	});
 </script>
 
-<h1 class="text-center text-4xl font-bold">Sala {data.id}</h1>
+<h1 class="text-center text-4xl font-bold">Sala {room?.name}</h1>
 <div class="w-full mt-6 flex items-center justify-center gap-3 flex-wrap">
 	<Card title="Felipe Moreira" value="5" isHidden={true} />
 	<Card title="Irwin Arruda" value="5" />

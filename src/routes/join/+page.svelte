@@ -1,13 +1,21 @@
 <script lang="ts">
+	import type { Socket } from 'socket.io-client';
+	import { PlanningPokerStore } from '~/providers/PlanningPokerStore';
 	import Button from '~/components/Button.svelte';
 	import TextField from '~/components/TextField.svelte';
+	export let data;
+
+	let socket: Socket;
+	PlanningPokerStore.subscribe((state) => {
+		socket = state.socket!;
+	});
 
 	let userName = '';
-	let roomId = '';
+	let roomId = data.id || '';
 
 	function onSubmit(e: Event) {
 		e.preventDefault();
-		console.log('data', {
+		socket.emit('joinRoom', {
 			userName,
 			roomId
 		});

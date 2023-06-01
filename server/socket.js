@@ -57,11 +57,12 @@ export class SocketHandler {
 	}
 
 	/**
-	 * @param {*} userName
+	 * @param {string} userId
+	 * @param {string} userName
 	 * @returns {User}
 	 */
-	createUser(userName) {
-		return { id: uuid(), name: userName };
+	createUser(userId, userName) {
+		return { id: userId, name: userName };
 	}
 
 	/**
@@ -76,23 +77,27 @@ export class SocketHandler {
 	 */
 	createRoom(socket, data) {
 		if (!this.canCreateRoom()) {
-			socket.emit('createRoom');
+			/** @type {SocketResponse} */
+			let response = { status: 'error', data: 'Max rooms reached' };
+			socket.emit('createRoom', response);
 			return;
 		}
 		let roomId = uuid();
-		let user = this.createUser(data.userName);
+		let user = this.createUser(socket.id, data.userName);
 		/** @type {Room} */
 		let room = {
 			id: roomId,
 			owner: socket.id,
 			name: data.roomName,
-			cards: data.roomCards.split(','),
+			cards: data.roomCards.split(',').map((card) => card.trim()),
 			players: [user]
 		};
-		this.rooms.set(roomId, room);
-		socket.emit('createdUser', { status: 'success', data: user });
+		this.rooms.set(room.id, room);
+		/** @type {SocketResponse} */
+		let response = { status: 'success', data: user };
+		socket.emit('createdUser', response);
 		socket.join(room.id);
-		socket.to(room.id).emit('joinRoom', { status: 'success', data: room });
+		this.io.to(room.id).emit('joinRoom', { status: 'success', data: room });
 	}
 
 	/**
@@ -108,18 +113,18 @@ export class SocketHandler {
 		let room = this.rooms.get(data.roomId);
 		if (!room) {
 			/** @type {SocketResponse} */
-			const response = { status: 'error', data: 'Room does not exist' };
+			let response = { status: 'error', data: 'Room does not exist' };
 			return socket.emit('joinRoom', response);
 		}
 
-		let user = this.createUser(data.userName);
+		let user = this.createUser(socket.id, data.userName);
 		socket.emit('createdUser', user);
 
 		room.players.push(user);
-		/** @type {SocketResponse} */
-		const response = { status: 'success', data: room };
 		socket.join(room.id);
-		socket.to(room.id).emit('joinRoom', response);
+		/** @type {SocketResponse} */
+		let response = { status: 'success', data: room };
+		this.io.to(room.id).emit('joinRoom', response);
 	}
 
 	/**
@@ -127,11 +132,13 @@ export class SocketHandler {
 	 */
 	disconnect(socket) {
 		this.rooms.forEach((room) => {
-			const playerIndex = room.players.findIndex((player) => player.id === socket.id);
+			let playerIndex = room.players.findIndex((player) => player.id === socket.id);
 			if (playerIndex !== -1) {
 				room.players.splice(playerIndex, 1);
-				if (room.players.length === 0) {
+				if (room.players.length === 0 || room.owner === socket.id) {
 					this.rooms.delete(room.id);
+					this.io.emit('delete-room', room.id);
+					this.io.to(room.id).emit('deletedRoom');
 				}
 			}
 		});
