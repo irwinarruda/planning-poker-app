@@ -1,17 +1,18 @@
 <script lang="ts">
-	import type { Room } from '~/entities/Room.js';
-	import type { User } from '~/entities/User.js';
-	import { PlanningPokerStore } from '~/providers/PlanningPokerStore';
+	import { usePlanningPokerStore } from '~/providers/PlanningPokerStore.ts';
 	import Button from '~/components/Button.svelte';
 	import Card from '~/components/Card.svelte';
 	// export let data;
+	let store = usePlanningPokerStore();
+	$: room = $store.room;
+	$: user = $store.user;
 
-	let room: Room;
-	let user: User;
-	PlanningPokerStore.subscribe((state) => {
-		room = state.room!;
-		user = state.user!;
-	});
+	$: cards = room?.cards || [];
+	let selectedCard: string | null = null;
+
+	function selectCard(card: string) {
+		selectedCard = card;
+	}
 </script>
 
 <h1 class="text-center text-4xl font-bold">Sala {room?.name}</h1>
@@ -25,23 +26,24 @@
 <div
 	class="flex items-center justify-center w-full h-36 p-5 bg-gray-100 rounded-md mt-5 overflow-hidden text-gray-900"
 >
-	<p class="font-normal">Pick your cards!</p>
-	<Button>Reveal cards</Button>
-	<Button className="bg-gray-700 hover:bg-gray-700">Start new voting</Button>
+	{#if !!selectedCard}
+		<Button>Reveal cards</Button>
+	{:else}
+		<p class="font-normal">Pick your cards!</p>
+	{/if}
+	<!-- <Button className="bg-gray-700 hover:bg-gray-700">Start new voting</Button> -->
 </div>
 <div
 	class="min-w-1/2 mx-auto px-16 py-4 absolute bottom-0 right-2/4 translate-x-2/4 bg-blue-800 rounded-t-[1000px] shadow-base shadow-blue-900"
 >
 	<h4 class="text-center text-md font-medium">Chose your card!</h4>
 	<div class="w-full mt-3 flex items-center gap-3 justify-center">
-		<Card value="1" onClick={() => console.log(1)} isSelected />
-		<Card value="2" onClick={() => console.log(2)} isDisabled />
-		<Card value="3" onClick={() => console.log(3)} />
-		<Card value="4" onClick={() => console.log(4)} />
-		<Card value="5" onClick={() => console.log(5)} />
+		{#each cards as card}
+			<Card value={card} isSelected={selectedCard === card} onClick={() => selectCard(card)} />
+		{/each}
 	</div>
 </div>
-<div
+<!-- <div
 	class="min-w-1/2 mx-auto px-16 py-4 absolute bottom-64 right-2/4 translate-x-2/4 bg-blue-800 rounded-t-[1000px] shadow-base shadow-blue-900"
 >
 	<div class="w-full mt-3 flex items-center gap-3 justify-center">
@@ -51,4 +53,4 @@
 		<Card title="1 vote" value="4" size="sm" />
 		<Card title="1 vote" value="5" size="sm" />
 	</div>
-</div>
+</div> -->

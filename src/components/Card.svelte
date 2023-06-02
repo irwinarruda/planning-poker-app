@@ -8,7 +8,7 @@
 	export let size: 'md' | 'sm' = 'md';
 	export let className: string | undefined = undefined;
 	export let onClick: (() => void) | undefined = undefined;
-	let classNames = mergeClassNames(
+	$: classNames = mergeClassNames(
 		'flex items-center justify-center bg-gray-100 rounded-md overflow-hidden text-gray-900 outline-none transition-all',
 		'aria-checked:border-4 aria-checked:border-green-500 aria-checked:bg-green-500 aria-checked:shadow-base aria-checked:shadow-green-500 aria-checked:text-white aria-checked:hover:bg-green-500',
 		'aria-hidden:p-5',
@@ -16,10 +16,9 @@
 		size === 'sm' && 'w-10 h-16',
 		isDisabled &&
 			'aria-disabled:text-white aria-disabled:bg-gray-400 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-gray-400 aria-disabled:focus:bg-gray-500',
+		!isDisabled && !isSelected && 'clickable:hover:bg-green-100 clickable:focus:bg-green-100',
 		!isDisabled &&
-			`${
-				!isSelected ? 'clickable:hover:bg-green-100 clickable:focus:bg-green-100 ' : ''
-			}clickable:hover:border-4 clickable:hover:border-green-500 clickable:hover:shadow-base clickable:hover:shadow-green-500 clickable:focus:border-4 clickable:focus:border-green-500 clickable:focus:shadow-base clickable:focus:shadow-green-500`,
+			`clickable:hover:border-4 clickable:hover:border-green-500 clickable:hover:shadow-base clickable:hover:shadow-green-500 clickable:focus:border-4 clickable:focus:border-green-500 clickable:focus:shadow-base clickable:focus:shadow-green-500`,
 		className
 	);
 </script>
