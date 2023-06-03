@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import { mergeClassNames } from '~/utils/mergeClassNames';
+
+	const dispatch = createEventDispatcher();
 
 	export let className: string | undefined = undefined;
 	export let type: 'button' | 'submit' | 'reset' = 'button';
@@ -11,6 +14,7 @@
 		className
 	)}
 	{type}
+	on:click={() => dispatch('click')}
 >
 	<slot />
 </button>

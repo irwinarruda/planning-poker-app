@@ -1,9 +1,11 @@
-import type { User } from './User';
+import type { Turn } from './Turn';
+import type { Player } from './Player';
 
 export type Room = {
 	id: string;
 	name: string;
 	cards: string[];
-	owner: User;
-	players: User[];
+	owner: Player;
+	players: Player[];
+	turns: Turn[];
 };

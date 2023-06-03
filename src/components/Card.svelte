@@ -28,20 +28,20 @@
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div
 			class={classNames}
-			on:click={onClick}
+			on:click={isDisabled ? undefined : onClick}
 			role={onClick ? 'button' : undefined}
 			tabindex={onClick ? 0 : undefined}
 			aria-checked={isSelected}
 			aria-hidden={isHidden}
 			aria-disabled={isDisabled}
 		>
-			<h2 class="text-2xl font-bold">{value}</h2>
+			<h2 class="text-2xl font-bold">{value || ''}</h2>
 		</div>
 	{:else}
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 		<div
 			class={classNames}
-			on:click={onClick}
+			on:click={isDisabled ? undefined : onClick}
 			role={onClick ? 'button' : undefined}
 			tabindex={onClick ? 0 : undefined}
 		>

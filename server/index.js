@@ -10,7 +10,6 @@ const app = express();
 const server = createServer(app);
 
 const io = new Server(server);
-
 new SocketHandler(io);
 
 app.use(handler);
