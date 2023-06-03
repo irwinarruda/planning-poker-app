@@ -7,8 +7,6 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node ./server/index.js",
-    "prepare": "pnpm smui-theme",
-    "smui-theme": "smui-theme compile static/smui.css -i src/theme -i ./node_modules",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
