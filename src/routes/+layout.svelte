@@ -12,7 +12,7 @@
 </script>
 
 <section class="w-screen h-screen bg-green-900 text-gray-100 relative">
-	<div class="w-1/4 m-auto pt-16">
+	<div class="max-w-md w-full m-auto pt-16 px-10">
 		<slot />
 	</div>
 </section>

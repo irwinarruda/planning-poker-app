@@ -50,9 +50,9 @@
 
 {#if turn?.isFinished}
 	<div
-		class="min-w-1/2 mx-auto px-16 py-4 absolute bottom-0 right-2/4 translate-x-2/4 bg-blue-800 rounded-t-[1000px] shadow-base shadow-blue-900"
+		class="max-w-2xl w-full mx-auto px-6 py-4 absolute bottom-0 right-2/4 translate-x-2/4 bg-blue-800 rounded-t-[50px] shadow-base shadow-blue-900"
 	>
-		<div class="w-full mt-3 flex items-center gap-3 justify-center">
+		<div class="mt-3 flex items-center gap-3 justify-center">
 			{#each turn?.turnSummary as turnSummary}
 				<Card title={`${turnSummary.count} votes`} value={turnSummary.card} size="sm" />
 			{/each}
@@ -60,10 +60,10 @@
 	</div>
 {:else}
 	<div
-		class="min-w-1/2 mx-auto px-16 py-4 absolute bottom-0 right-2/4 translate-x-2/4 bg-blue-800 rounded-t-[1000px] shadow-base shadow-blue-900"
+		class="max-w-2xl w-full mx-auto px-6 py-4 absolute bottom-0 right-2/4 translate-x-2/4 bg-blue-800 rounded-t-[50px] shadow-base shadow-blue-900"
 	>
 		<h4 class="text-center text-md font-medium">Chose your card!</h4>
-		<div class="w-full mt-3 flex items-center gap-3 justify-center">
+		<div class="mt-3 flex items-center gap-3 overflow-x-auto">
 			{#each cards as card}
 				<Card
 					value={card}
