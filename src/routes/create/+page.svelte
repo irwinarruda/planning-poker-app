@@ -31,6 +31,9 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Planning Poker | Create</title>
+</svelte:head>
 <h1 class="text-center text-4xl font-bold">Planning Pocker App</h1>
 <form
 	class="w-full p-5 bg-gray-100 rounded-md mt-5 overflow-hidden text-gray-900"
