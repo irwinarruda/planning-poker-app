@@ -1,38 +1,35 @@
-# create-svelte
+# <img src="./assets/logo.svg" height="45pd" align="center" /> Planning Poker App
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A real-time application game that helps teams plan their sprints using the **Planning** Poker method.
 
-## Creating a project
+**Planning Pocker App** is a small project to help me learn **Svelte**, **NginX**, **EC2**, and **WebSockets**.
 
-If you're seeing this, you've probably already done this step. Congrats!
+<p align="center">
+    <img width="450px" src="./assets/app_pages_2.png" />
+</p>
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+With the app, the user can:
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- Create a room informing: player's name, room's name, and the voting system.
+- Share the room by copying the page URL.
+- Join an existing room by entering the shared URL.
 
-## Developing
+<p align="center">
+    <img width="450px" src="./assets/app_pages_1.png" />
+</p>
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+The game works as follows:
 
-```bash
-npm run dev
+- Every turn represents a task that the team is attempting to estimate.
+- Players can choose a card they think best represents the task complexity.
+- At any point, any player can end the turn revealing everyone's selections.
+- If there is consensus about the task estimate, the team can move on to the next task. Otherwise, they can initiate a new turn for the same task.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Technologies
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Figma for the initial prototype and logo.
+- [Svelte](https://svelte.dev/) for the UI buinding.
+- [Svelte Kit](https://kit.svelte.dev/) as the SSR provider.
+- [Tailwind CSS](https://tailwindcss.com/) for styling.
+- [Socket.IO](https://socket.io/) for real-time server communication.
+- [AWS EC2]() and [NginX](https://www.nginx.com/) for the virtual machine and HTTP server. This is necessary as maintaining a WebSocket connection within Vercel is challenging due to their use of serverless functions for deployment. [Click here for more info](https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections).

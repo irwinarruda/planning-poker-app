@@ -28,7 +28,7 @@
 <svelte:head>
 	<title>Planning Poker | {room?.name || 'Room'}</title>
 </svelte:head>
-<h1 class="text-center text-4xl font-bold">Sala {room?.name}</h1>
+<h1 class="text-center text-4xl font-bold">{room?.name}</h1>
 <div class="w-full mt-6 flex items-center justify-center gap-3 flex-wrap">
 	{#each turnPlayers as turnPlayer}
 		<Card
